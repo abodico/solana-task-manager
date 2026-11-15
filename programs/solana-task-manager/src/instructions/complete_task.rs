@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 use crate::constants::TASK_SEED;
+use crate::error::TaskManagerError;
 use crate::state::TaskAccount;
 
 #[derive(Accounts)]
@@ -24,6 +25,8 @@ pub struct CompleteTask<'info> {
 
 pub fn handle_complete_task(ctx: Context<CompleteTask>, _task_id: u64) -> Result<()> {
     let task = &mut ctx.accounts.task;
+    require!(!task.completed, TaskManagerError::TaskAlreadyCompleted);
+
     task.completed = true;
     Ok(())
 }

@@ -7,3 +7,21 @@ pub enum ErrorCode {
     #[msg("Counter has reached the maximum value")]
     CounterOverflow,
 }
+
+#[error_code]
+pub enum TaskManagerError {
+    #[msg("Task title cannot be empty")]
+    EmptyTitle,
+
+    #[msg("Task title cannot exceed 50 bytes")]
+    TitleTooLong,
+
+    #[msg("Task description cannot exceed 200 bytes")]
+    DescriptionTooLong,
+
+    #[msg("Task is already completed")]
+    TaskAlreadyCompleted,
+
+    #[msg("Task counter overflow")]
+    TaskCounterOverflow,
+}

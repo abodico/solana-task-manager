@@ -30,4 +30,8 @@ pub mod solana_task_manager {
     pub fn create_task(ctx: Context<CreateTask>, title: String, description: String) -> Result<()> {
         crate::instructions::create_task::handle_create_task(ctx, title, description)
     }
+
+    pub fn delete_task(ctx: Context<DeleteTask>, task_id: u64) -> Result<()> {
+        crate::instructions::delete_task::handle_delete_task(ctx, task_id)
+    }
 }

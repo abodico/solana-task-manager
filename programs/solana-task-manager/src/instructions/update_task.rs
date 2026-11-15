@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 use crate::constants::TASK_SEED;
+use crate::error::TaskManagerError;
 use crate::state::TaskAccount;
 
 #[derive(Accounts)]
@@ -28,6 +29,14 @@ pub fn handle_update_task(
     title: String,
     description: String,
 ) -> Result<()> {
+    require!(!title.trim().is_empty(), TaskManagerError::EmptyTitle);
+
+    require!(title.len() <= 50, TaskManagerError::TitleTooLong);
+
+    require!(
+        description.len() <= 200,
+        TaskManagerError::DescriptionTooLong
+    );
     let task = &mut ctx.accounts.task;
 
     task.title = title;

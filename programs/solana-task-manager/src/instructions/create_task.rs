@@ -1,6 +1,7 @@
 use anchor_lang::prelude::*;
 
 use crate::constants::{TASK_SEED, USER_PROFILE_SEED};
+use crate::error::TaskManagerError;
 use crate::state::{TaskAccount, UserProfile};
 
 #[derive(Accounts)]
@@ -40,6 +41,15 @@ pub fn handle_create_task(
     title: String,
     description: String,
 ) -> Result<()> {
+    require!(!title.trim().is_empty(), TaskManagerError::EmptyTitle);
+
+    require!(title.len() <= 50, TaskManagerError::TitleTooLong);
+
+    require!(
+        description.len() <= 200,
+        TaskManagerError::DescriptionTooLong
+    );
+
     let user_profile = &mut ctx.accounts.user_profile;
     let task = &mut ctx.accounts.task;
 
@@ -49,7 +59,10 @@ pub fn handle_create_task(
     task.description = description;
     task.completed = false;
 
-    user_profile.task_count += 1;
+    user_profile
+        .task_count
+        .checked_add(1)
+        .ok_or(TaskManagerError::TaskCounterOverflow)?;
 
     Ok(())
 }
