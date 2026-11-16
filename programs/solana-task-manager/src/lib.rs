@@ -38,4 +38,13 @@ pub mod solana_task_manager {
     pub fn complete_task(ctx: Context<CompleteTask>, task_id: u64) -> Result<()> {
         crate::instructions::complete_task::handle_complete_task(ctx, task_id)
     }
+
+    pub fn update_task(
+        ctx: Context<UpdateTask>,
+        task_id: u64,
+        title: String,
+        description: String,
+    ) -> Result<()> {
+        crate::instructions::update_task::handle_update_task(ctx, task_id, title, description)
+    }
 }

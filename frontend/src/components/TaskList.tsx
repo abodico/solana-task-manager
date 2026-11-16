@@ -6,6 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react"
 import { useTaskManagerProgram } from "@/src/hooks/useTaskManagerProgram"
 import { getUserTasks } from "@/src/lib/solana"
 import { CompleteTask } from "./CompleteTask"
+import { UpdateTask } from "./UpdateTask"
 
 interface Task {
     taskId: string
@@ -21,6 +22,7 @@ export function TaskList() {
     const [tasks, setTasks] = useState<Task[]>([])
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+    const [editingTaskId, setEditingTaskId] = useState<string | null>(null)
 
     async function fetchTasks() {
         if (!publicKey || !program) return
@@ -110,6 +112,29 @@ export function TaskList() {
                             completed={task.completed}
                             onCompleted={fetchTasks}
                         />
+                        <button
+                            onClick={() =>
+                                setEditingTaskId(
+                                    editingTaskId === task.taskId
+                                        ? null
+                                        : task.taskId,
+                                )
+                            }
+                            className="rounded-lg border px-3 py-2 text-sm"
+                        >
+                            {editingTaskId === task.taskId ? "Cancel" : "Edit"}
+                        </button>
+                        {editingTaskId === task.taskId && (
+                            <UpdateTask
+                                taskId={task.taskId}
+                                title={task.title}
+                                description={task.description}
+                                onUpdated={() => {
+                                    setEditingTaskId(null)
+                                    fetchTasks()
+                                }}
+                            />
+                        )}
                     </article>
                 ))}
             </div>
