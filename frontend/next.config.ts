@@ -1,7 +1,6 @@
 import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
-    /* config options here */
     experimental: {
         agentFeedback: true,
     },
@@ -11,12 +10,6 @@ const nextConfig: NextConfig = {
         resolveAlias: {
             fs: {
                 browser: "./src/lib/empty.ts",
-            },
-        },
-        rules: {
-            "*.css": {
-                loaders: ["@tailwindcss/turbopack"],
-                as: "*.css",
             },
         },
     },
