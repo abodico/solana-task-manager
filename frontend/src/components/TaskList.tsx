@@ -7,6 +7,7 @@ import { useTaskManagerProgram } from "@/src/hooks/useTaskManagerProgram"
 import { getUserTasks } from "@/src/lib/solana"
 import { CompleteTask } from "./CompleteTask"
 import { UpdateTask } from "./UpdateTask"
+import { DeleteTask } from "./DeleteTask"
 
 interface Task {
     taskId: string
@@ -135,6 +136,11 @@ export function TaskList() {
                                 }}
                             />
                         )}
+
+                        <DeleteTask
+                            taskId={task.taskId}
+                            onDeleted={fetchTasks}
+                        />
                     </article>
                 ))}
             </div>

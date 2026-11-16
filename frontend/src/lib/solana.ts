@@ -46,15 +46,24 @@ export async function getUserTasks(
     const taskCount = BigInt(userProfile.taskCount.toString())
 
     // 4. Fetch all tasks
-    const tasks = await Promise.all(
+    const results = await Promise.all(
         Array.from({ length: Number(taskCount) }, async (_, index) => {
             const taskId = BigInt(index)
 
             const [taskPda] = getTaskPda(authority, taskId)
 
-            return program.account.taskAccount.fetch(taskPda)
+            try {
+                return await program.account.taskAccount.fetch(taskPda)
+            } catch (error) {
+                console.log(
+                    `Task ${index} does not exist or could not be fetched.`,
+                )
+                return null
+            }
         }),
     )
+
+    const tasks = results.filter((task) => task !== null)
 
     return tasks
 }
