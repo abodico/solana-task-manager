@@ -9,8 +9,11 @@ skip-lint = false
 [programs.localnet]
 solana_task_manager = "5LGPifnzWuU9bqMezaUdYR6AtGJ2ZZAQDV4q891R7Mxi"
 
+[programs.devnet]
+solana_task_manager = "5LGPifnzWuU9bqMezaUdYR6AtGJ2ZZAQDV4q891R7Mxi"
+
 [provider]
-cluster = "localnet"
+cluster = "devnet"
 wallet = "~/.config/solana/id.json"
 
 [scripts]

@@ -1,6 +1,6 @@
 use anchor_lang::prelude::*;
 
-use crate::{constants::*, error::ErrorCode, state::Counter};
+use crate::{constants::*, error::TaskManagerError, state::Counter};
 
 #[derive(Accounts)]
 pub struct Increment<'info> {
@@ -13,14 +13,17 @@ pub fn handle_increment(ctx: Context<Increment>) -> Result<()> {
     require_keys_eq!(
         ctx.accounts.counter.authority,
         ctx.accounts.authority.key(),
-        ErrorCode::Unauthorized,
+        TaskManagerError::Unauthorized,
     );
     require!(
         ctx.accounts.counter.count < MAX_COUNT,
-        ErrorCode::CounterOverflow,
+        TaskManagerError::Unauthorized,
     );
 
     ctx.accounts.counter.count += 1;
-    msg!("Hello, world! Counter is now {}", ctx.accounts.counter.count);
+    msg!(
+        "Hello, world! Counter is now {}",
+        ctx.accounts.counter.count
+    );
     Ok(())
 }
