@@ -14,6 +14,59 @@ export type SolanaTaskManager = {
   },
   "instructions": [
     {
+      "name": "completeTask",
+      "discriminator": [
+        109,
+        167,
+        192,
+        41,
+        129,
+        108,
+        220,
+        196
+      ],
+      "accounts": [
+        {
+          "name": "authority",
+          "signer": true,
+          "relations": [
+            "task"
+          ]
+        },
+        {
+          "name": "task",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  97,
+                  115,
+                  107
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "arg",
+                "path": "taskId"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "taskId",
+          "type": "u64"
+        }
+      ]
+    },
+    {
       "name": "createTask",
       "discriminator": [
         194,
