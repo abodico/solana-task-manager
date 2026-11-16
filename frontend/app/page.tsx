@@ -1,4 +1,7 @@
 import { ConnectWallet } from "@/src/components/ConnectWallet"
+import { CreateTask } from "@/src/components/CreateTask"
+import { InitializeUser } from "@/src/components/InitializeUser"
+import { UserProfileInfo } from "@/src/components/UserProfileInfo"
 import { WalletInfo } from "@/src/components/WalletInfo"
 
 export default function Home() {
@@ -8,6 +11,10 @@ export default function Home() {
 
             <ConnectWallet />
             <WalletInfo />
+
+            <InitializeUser />
+            <UserProfileInfo />
+            <CreateTask />
         </main>
     )
 }

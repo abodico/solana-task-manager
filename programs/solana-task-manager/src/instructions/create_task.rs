@@ -59,7 +59,7 @@ pub fn handle_create_task(
     task.description = description;
     task.completed = false;
 
-    user_profile
+    user_profile.task_count = user_profile
         .task_count
         .checked_add(1)
         .ok_or(TaskManagerError::TaskCounterOverflow)?;

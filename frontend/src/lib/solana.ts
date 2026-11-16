@@ -10,3 +10,22 @@ export function getUserProfilePda(authority: PublicKey): [PublicKey, number] {
         PROGRAM_ID,
     )
 }
+
+export function getTaskPda(
+    authority: PublicKey,
+    taskId: bigint,
+): [PublicKey, number] {
+    const taskIdBytes = new Uint8Array(8)
+
+    let value = taskId
+
+    for (let i = 0; i < 8; i++) {
+        taskIdBytes[i] = Number(value & 0xffn)
+        value >>= 8n
+    }
+
+    return PublicKey.findProgramAddressSync(
+        [new TextEncoder().encode("task"), authority.toBuffer(), taskIdBytes],
+        PROGRAM_ID,
+    )
+}
