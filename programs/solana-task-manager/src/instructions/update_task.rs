@@ -25,7 +25,7 @@ pub struct UpdateTask<'info> {
 
 pub fn handle_update_task(
     ctx: Context<UpdateTask>,
-    task_id: u64,
+    _task_id: u64,
     title: String,
     description: String,
 ) -> Result<()> {
